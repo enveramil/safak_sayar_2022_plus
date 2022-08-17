@@ -12,7 +12,7 @@ class MyHomePage extends StatefulWidget {
 PageController controller = PageController();
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Widget> pages = [HomePage(), UserDetails()];
+  List<Widget> pages = [HomePage(), const UserDetails()];
   int currentIndex = 0;
 
   @override

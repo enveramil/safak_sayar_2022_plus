@@ -15,8 +15,11 @@ final Future<SharedPreferences> preferences = SharedPreferences.getInstance();
 class _HomePageState extends State<HomePage> {
   String name = "";
   String giris = "";
-  String memleket = "";
+  String izin = "";
   String yer = "";
+  String sure = "";
+  String country = "";
+  String title = "Şafak Sayar 2022+";
   @override
   void initState() {
     // TODO: implement initState
@@ -27,7 +30,19 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(title),
+        leading: Image.network(
+            'https://w0.peakpx.com/wallpaper/506/505/HD-wallpaper-turk-bayragi-bayrak-flag-turk-bayrak-turkish-turkish-flag-thumbnail.jpg'),
+        leadingWidth: 80,
+        actions: [
+          Container(
+            margin: EdgeInsets.only(right: 9),
+            child: Image.network(
+                'https://w0.peakpx.com/wallpaper/506/505/HD-wallpaper-turk-bayragi-bayrak-flag-turk-bayrak-turkish-turkish-flag-thumbnail.jpg'),
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: ListView(
@@ -103,7 +118,7 @@ class _HomePageState extends State<HomePage> {
               child: SizedBox(
                 height: 60,
                 child: CustomCard(
-                  userInfo: "Memleket: ${memleket}",
+                  userInfo: "İzin Hakkı: ${izin}",
                 ),
               ),
             ),
@@ -113,6 +128,24 @@ class _HomePageState extends State<HomePage> {
                 height: 60,
                 child: CustomCard(
                   userInfo: "Askerlik Yeri: ${yer}",
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 60,
+                child: CustomCard(
+                  userInfo: "Süre: ${sure}",
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 60,
+                child: CustomCard(
+                  userInfo: "Ülke: ${country}",
                 ),
               ),
             ),
@@ -127,8 +160,10 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         name = prefs.getString('name') ?? '';
         giris = prefs.getString('giris') ?? '';
-        memleket = prefs.getString('memleket') ?? '';
+        izin = prefs.getString('memleket') ?? '';
         yer = prefs.getString('yer') ?? '';
+        sure = prefs.getString('month') ?? '';
+        country = prefs.getString('country') ?? '';
       });
     });
   }
