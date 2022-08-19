@@ -33,6 +33,7 @@ class _UserDetailsState extends State<UserDetails> {
   Icon nameIcon = Icon(Icons.person);
   Icon countryIcon = Icon(Icons.holiday_village_outlined);
   Icon placeIcon = Icon(Icons.place_outlined);
+  bool isFirst = true;
 
   String selectedCountryItem = "Adana";
   String title = "Şafak Sayar 2022+";
@@ -162,7 +163,7 @@ class _UserDetailsState extends State<UserDetails> {
                   onPressed: () {
                     setState(() {
                       save();
-                      controller.previousPage(
+                      controller2.previousPage(
                           duration: const Duration(milliseconds: 500),
                           curve: Curves.easeIn);
                     });
@@ -204,6 +205,7 @@ class _UserDetailsState extends State<UserDetails> {
         yer.text = pref.getString('yer') ?? '';
         selectedItem = pref.getString('month') ?? '6 Ay';
         selectedCountryItem = pref.getString('country') ?? 'Adana';
+        isFirst = pref.getBool('is_first_loaded') ?? false;
       });
     });
   }

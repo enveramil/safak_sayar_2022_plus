@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:safak_sayar_2022_plus/screens/countdowntimer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
@@ -47,6 +48,7 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(10.0),
         child: ListView(
           children: [
+            const CountDownTimer(),
             SizedBox(
               height: 150,
               child: Card(

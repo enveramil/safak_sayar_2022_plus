@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:safak_sayar_2022_plus/screens/countdowntimer.dart';
 import 'package:safak_sayar_2022_plus/screens/home_page.dart';
 import 'package:safak_sayar_2022_plus/screens/user_details.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -10,15 +12,43 @@ class MyHomePage extends StatefulWidget {
 }
 
 PageController controller = PageController();
+final controller2 = PageController(initialPage: 1);
 
 class _MyHomePageState extends State<MyHomePage> {
+  final keyIsFirstLoaded = 'is_first_loaded';
   List<Widget> pages = [HomePage(), const UserDetails()];
-  int currentIndex = 0;
+  int currentIndex = 1;
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      popUp(context);
+    });
     super.initState();
     initApp();
+  }
+
+  popUp(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? isFirstLoaded = prefs.getBool(keyIsFirstLoaded);
+    if (isFirstLoaded == null) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('!!! UYGULAMAMIZA HOŞGELDİNİZ !!!'),
+          content: Text(
+              'Uygulamaya başlamak için önünüzdeki ekrandan bilgilerinizi girmeniz gerekmektedir. Lütfen bu bildirim ekranı kapandıktan sonra bilgilerinizi doldurunuz...'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  prefs.setBool(keyIsFirstLoaded, false);
+                },
+                child: Text('Ok'))
+          ],
+        ),
+      );
+    }
   }
 
   @override
@@ -30,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
             currentIndex = index;
           });
         },
-        controller: controller,
+        controller: controller2,
         children: pages,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -41,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
           setState(() {
             currentIndex = index;
 
-            controller.animateToPage(index,
+            controller2.animateToPage(index,
                 duration: const Duration(milliseconds: 500),
                 curve: Curves.easeIn);
           });
